@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            transform: translateX(250px);
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #fff;
+            margin-bottom: 10px;
+        }
+
+        .sidebar a:hover {
+            background-color: #444;
+        }
+
+        .hamburger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger div {
+            width: 30px;
+            height: 3px;
+            background-color: #333;
+            margin: 6px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.open div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.open div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .sidebar-content {
+            padding-top: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            background-color: rgb(58, 215, 224);
+            padding: 10px;
+            margin: 0;
+            font-size: 40px;
+            border-width: 2px;
+            border-color: black;
+            border-style: solid;
+        }
+
+        .top {
+            display: flex;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: rgb(255, 255, 255);
+            margin: 0;
+            border-width: 2px;
+            border-color: black;
+            border-style: solid;
+            align-items: center;
+            height: auto;
+        }
+
+        #pfp {
+            margin: 10px;
+            padding: 10px;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #pfp img {
+            width: 180px;
+            height: auto;
+        }
+
+        #person {
+            width: 100%;
+            font-family: 'Consolas';
+            margin: 10px;
+            border: 1px solid black;
+            border-radius: 8px;
+            background-color: white;
+            display: flex;
+            padding: 10px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #person p {
+            margin: 10px 0;
+            font-size: 30px;
+            color: #333;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 24px;
+                padding: 8px;
+            }
+
+            .top {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #pfp {
+                width: 100%;
+                margin: 10px 0;
+                padding: 0;
+            }
+
+            #pfp img {
+                width: 120px;
+                height: auto;
+            }
+
+            #person {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+            }
+
+            #person p {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <a href="home.html">Home</a>
+            <a href="{% url 'committee' %}">Committee</a>
+
+            <a href="facebook_final_login.html">Logout</a>
+        </div>
+    </div>
+    <!-- Hamburger Icon -->
+    <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const hamburger = document.querySelector('.hamburger');
+            sidebar.classList.toggle('open');
+            hamburger.classList.toggle('open');
+        }
+    </script>
+
+    <div class="Home">
+        <h2>Meeting Management Automation Workspace</h2>
+        <div class="top">
+            <div id="pfp">
+                <img
+                    src="https://static.vecteezy.com/system/resources/previews/036/280/650/original/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg">
+            </div>
+            <div id="person">
+                <p>Name: First Middle Last</p>
+                <p>User ID: firstlast@gmail.com</p>
+                <p>Role: Head Of the Department, CST</p>
+            </div>
+        </div>
+        <h2>Upcoming Meetings</h2>
+        <div class="bottom"></div>
+    </div>
+</body>
+
+</html>

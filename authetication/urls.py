@@ -10,11 +10,12 @@ from django.conf.urls.static import static
 from . import views
  
 urlpatterns = [
-    path('home/', home, name="recipes"),      # Home page
+    path('home/', home, name="dashboard"),      # Home page
     path("admin/", admin.site.urls),          # Admin interface
     path('', login_page, name='login_page'),    # Login page
     path('login/', login_page, name='login_page'),    # Login page
     path('register/', register_page, name='register'),  # Registration page
+    path('committee/', committee_view, name='committee'),
 ]
 
  

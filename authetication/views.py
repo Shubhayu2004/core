@@ -8,7 +8,7 @@ from .models import *
 
 # Define a view function for the home page
 def home(request):
-	return render(request, 'home.html')
+	return render(request, 'home1.html')
 
 # Define a view function for the login page
 def login_page(request):
@@ -72,3 +72,6 @@ def register_page(request):
 	
 	# Render the registration page template (GET request)
 	return render(request, 'register.html')
+
+def committee_view(request):
+	return render(request, 'committee.html')

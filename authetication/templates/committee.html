@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Committee</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            transform: translateX(250px);
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px 0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #fff;
+            margin-bottom: 10px;
+        }
+
+        .sidebar a:hover {
+            background-color: #444;
+        }
+
+        .hamburger {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger div {
+            width: 30px;
+            height: 3px;
+            background-color: #333;
+            margin: 6px 0;
+            transition: 0.3s;
+        }
+
+        .hamburger.open div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.open div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .sidebar-content {
+            padding-top: 40px;
+        }
+
+        .btn {
+            text-align: center;
+            width: 300px;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            background: linear-gradient(45deg, #ff6b6b, #f06595);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background 0.3s ease, box-shadow 0.2s ease;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #f06595, #ff6b6b);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #create-committee {
+            display: none;
+            /* Hide the section by default */
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            background-color: white;
+            z-index: 1000;
+        }
+
+        .close-btn {
+            background: #f00;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #roles-container div {
+            margin-bottom: 15px;
+        }
+
+        #submit-button {
+            width: 50%;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #add-member-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 50%;
+        }
+
+        #MyCom {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <a href="home.html">Home</a>
+            <a href="committee.html">Committee</a>
+            <a href="facebook_final_login.html">Logout</a>
+        </div>
+    </div>
+
+    <!-- Hamburger Icon -->
+    <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <!-- Button -->
+    <button class="btn" id="create-committee-btn">Create A Committee</button>
+    <h2 id="MyCom">My Committees</h2>
+    <!-- Section: Create Committee -->
+    <section id="create-committee">
+        <button class="close-btn" onclick="toggleCreateCommittee()">×</button>
+        <h2>Create Committee</h2>
+        <form id="committee-form">
+            <label>Committee Name:</label>
+            <input type="text" name="Name" placeholder="Enter Name">
+            <label>Committee Purpose:</label>
+            <input type="text" name="Name" placeholder="Enter Purpose">
+
+
+            <label>Chairman:</label>
+            <input type="text" name="Chairman" placeholder="Enter Name">
+            <input type="text" name="Chairman" placeholder="Enter Email id">
+            <label>Convener:</label>
+            <input type="text" name="convener" placeholder="Enter Name">
+            <input type="text" name="convener" placeholder="Enter Email id">
+
+            <div id="roles-container">
+            </div>
+            <label>Member:</label>
+            <input type="text" name="member" placeholder="Enter Name">
+            <input type="text" name="chairperson" placeholder="Enter Email id">
+
+            <button type="button" id="add-member-button" onclick="addMember()">Add Member</button>
+
+            <button type="submit" id="submit-button">Create Committee</button>
+        </form>
+    </section>
+
+    <script>
+        function addMember() {
+            const rolesContainer = document.getElementById('roles-container');
+            const memberElement = document.createElement('div');
+            memberElement.innerHTML = `
+        <label>Member:</label>
+        <input type="text" name="member" placeholder="Enter Name">
+        <input type="text" name="member_email" placeholder="Enter Email id">
+    `;
+            rolesContainer.appendChild(memberElement);
+        }
+
+        function toggleCreateCommittee() {
+            const committeeSection = document.getElementById('create-committee');
+            const isVisible = committeeSection.style.display === 'block';
+            committeeSection.style.display = isVisible ? 'none' : 'block';
+        }
+
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const hamburger = document.querySelector('.hamburger');
+            sidebar.classList.toggle('open');
+            hamburger.classList.toggle('open');
+        }
+
+        // Toggle visibility of the "Create Committee" section
+        document.getElementById('create-committee-btn').addEventListener('click', toggleCreateCommittee);
+    </script>
+</body>
+
+</html>
